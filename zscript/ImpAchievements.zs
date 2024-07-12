@@ -200,6 +200,8 @@ class ia_Melee : sa_Achievement
     sa_Achievement.name "Come closer";
     sa_Achievement.description "Hit imps 100 times with melee attack";
     sa_Achievement.limit 100;
+    sa_Achievement.isProgressVisible true;
+    sa_Achievement.isProgressVisibleInterval 10;
     sa_Achievement.lockedIcon "graphics/sa_icon.png";
     sa_Achievement.unlockedIcon "graphics/sa_icon.png";
     sa_Achievement.unlockSound "misc/secret";

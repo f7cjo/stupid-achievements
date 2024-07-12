@@ -83,7 +83,10 @@ class sa_Achievement : Actor abstract
     sa_Achievement.progressTitle "$SA_PROGRESS";
 
     // True if a notification is shown each time this achievement progress advances.
+    // Interval decides how often to show the notification, e.g. every 10 progresses.
+    // Interval must be > 0.
     sa_Achievement.isProgressVisible false;
+    sa_Achievement.isProgressVisibleInterval 1;
 
     // Hidden achievements don't show up in Locked achievement list, and are only
     // visible when are achieved.
@@ -159,7 +162,7 @@ extend class sa_Achiever
     {
     case STATE_UNLOCKED: addTask(me, achievement, false, 0); break;
     case STATE_PROGRESS:
-      if (achievement.isProgressVisible)
+      if (achievement.isProgressVisible && count % achievement.isProgressVisibleInterval == 0)
       {
         addTask(me, achievement, true,  count);
       }
@@ -312,6 +315,7 @@ extend class sa_Achievement
   int    limit;
   String progressTitle;
   bool   isProgressVisible;
+  int    isProgressVisibleInterval;
 
   int lifetime;
   int animationTime;
@@ -339,6 +343,7 @@ extend class sa_Achievement
   property limit         : limit;
   property progressTitle : progressTitle;
   property isProgressVisible : isProgressVisible;
+  property isProgressVisibleInterval : isProgressVisibleInterval;
   property lifetime      : lifetime;
   property animationTime : animationTime;
   property fontName      : fontName;
