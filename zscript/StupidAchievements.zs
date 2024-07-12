@@ -116,6 +116,10 @@ class sa_Achievement : Actor abstract
     sa_Achievement.lockedIcon "";
     sa_Achievement.unlockedIcon "";
 
+    // Achievement sound (optional)
+    sa_Achievement.unlockSound "";
+    sa_Achievement.progressSound "";
+
     // Text color. See Font struct for available colors.
     sa_Achievement.textColor Font.CR_White;
 
@@ -326,6 +330,9 @@ extend class sa_Achievement
   String lockedIcon;
   String unlockedIcon;
 
+  String unlockSound;
+  String progressSound;
+
   property title         : title;
   property name          : name;
   property description   : description;
@@ -344,6 +351,8 @@ extend class sa_Achievement
   property isHidden      : isHidden;
   property lockedIcon    : lockedIcon;
   property unlockedIcon  : unlockedIcon;
+  property unlockSound   : unlockSound;
+  property progressSound : progressSound;
 
 } // class sa_Achievement
 
@@ -391,6 +400,14 @@ class sa_ // namespace
     return isLocked
       ? TexMan.checkForTexture(achievement.lockedIcon, TexMan.Type_Any)
       : TexMan.checkForTexture(achievement.unlockedIcon, TexMan.Type_Any);
+  }
+
+  static
+  String switchSound(readonly<sa_Achievement> achievement, bool isLocked)
+  {
+    return isLocked
+      ? achievement.progressSound
+      : achievement.unlockSound;
   }
 
   static
@@ -489,6 +506,7 @@ class sa_Task abstract
 
   void start()
   {
+    S_StartSound(mSound,CHAN_AUTO,CHANF_UI);
     mBirthTime = level.time;
   }
 
@@ -501,6 +519,7 @@ class sa_Task abstract
     mFont    = achievement.fontName;
     mTexture = TexMan.checkForTexture(achievement.texture, TexMan.Type_Any);
     mIcon    = sa_.switchIcon(achievement, isProgress);
+    mSound   = sa_.switchSound(achievement, isProgress);
 
     mHorizontalPositionCvar = sa_Cvar.of("sa_horizontal_position");
     mVerticalPositionCvar   = sa_Cvar.of("sa_vertical_position");
@@ -513,6 +532,7 @@ class sa_Task abstract
   protected String    mFont;
   protected TextureID mTexture;
   protected TextureID mIcon;
+  protected String    mSound;
 
   protected int mBirthTime;
 
