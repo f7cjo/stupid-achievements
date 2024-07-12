@@ -366,6 +366,8 @@ class sa_TestAchievement : sa_Achievement
     sa_Achievement.isProgressVisible true;
     sa_Achievement.lockedIcon "sa_icon";
     sa_Achievement.unlockedIcon "sa_icon";
+    sa_Achievement.progressSound "misc/chat";
+    sa_Achievement.unlockSound "misc/secret";
   }
 } // class sa_TestAchievement
 
