@@ -513,7 +513,10 @@ class sa_Task abstract
 
   void start()
   {
-    S_StartSound(mSound,CHAN_AUTO,CHANF_UI);
+    if(mSoundEnabledCvar.getBool())
+    {
+      S_StartSound(mSound,CHAN_AUTO,CHANF_UI);
+    }
     mBirthTime = level.time;
   }
 
@@ -528,6 +531,7 @@ class sa_Task abstract
     mIcon    = sa_.switchIcon(achievement, isProgress);
     mSound   = sa_.switchSound(achievement, isProgress);
 
+    mSoundEnabledCvar       = sa_Cvar.of("sa_sound_enabled");
     mHorizontalPositionCvar = sa_Cvar.of("sa_horizontal_position");
     mVerticalPositionCvar   = sa_Cvar.of("sa_vertical_position");
   }
@@ -545,6 +549,7 @@ class sa_Task abstract
 
   protected sa_Cvar mHorizontalPositionCvar;
   protected sa_Cvar mVerticalPositionCvar;
+  protected sa_Cvar mSoundEnabledCvar;
 
 } // class sa_Task abstract
 
